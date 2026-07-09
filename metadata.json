@@ -1,0 +1,10 @@
+{
+  "name": "Remix: CareerCall",
+  "description": "Can our AI guess your career in 2 minutes using indirect, rapid questions?",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
