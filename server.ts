@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
-import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import { createClient } from "@supabase/supabase-js";
 
@@ -160,7 +159,9 @@ function getSupabase() {
 }
 
 // Persisted Leaderboard database fallback
-const LEADERBOARD_FILE = path.join(process.cwd(), "leaderboard-data.json");
+const LEADERBOARD_FILE = process.env.VERCEL 
+  ? path.join("/tmp", "leaderboard-data.json")
+  : path.join(process.cwd(), "leaderboard-data.json");
 let leaderboardEntries: any[] = [];
 
 function loadLeaderboard() {
@@ -563,6 +564,7 @@ You must reply with a JSON object adhering exactly to the specified response sch
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     // Mount Vite dev server in middleware mode
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
